@@ -1,7 +1,12 @@
 const createInvoice = (z, bundle) => {
     const promise = {};
 
-    return true;
+    return {
+        customer_id: 1,
+        line_items: [
+            {}
+        ]
+    };
 };
 
 module.exports = {
@@ -15,33 +20,33 @@ module.exports = {
     operation: {
         inputFields: [
             {
-                key: 'organization',
+                key: 'organizationId',
                 label: 'Organization',
                 required: true
             },
             {
-                key: 'line_item_id',
-                label: 'Line Item ID',
-                required: true,
-                helpText: 'The ID of Zoho Line Item to use'
-            },
-            {
-                key: 'contact_id',
+                key: 'contactId',
                 label: 'Contact ID',
                 required: true,
                 helpText: 'The ID of the Zoho Contact being invoiced'
             },
             {
-                key: 'send',
-                label: 'Send',
-                required: false,
-                helpText: 'Should we send the invoice to the contact now?'
+                key: 'lineItemId',
+                label: 'Line Item ID',
+                required: true,
+                helpText: 'The ID of Zoho Line Item to use'
             },
             {
-                key: 'line_items',
+                key: 'lineItems',
                 label: 'Line Item Input',
                 required: true,
                 helpText: 'The digest content to be used as invoice line items'
+            },
+            {
+                key: 'shouldSend',
+                label: 'Send',
+                required: false,
+                helpText: 'Should we send the invoice to the contact now?'
             }
         ],
         perform: createInvoice
