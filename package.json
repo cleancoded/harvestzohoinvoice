@@ -1,5 +1,5 @@
 {
-  "name": "Multi-line Zoho Invoice",
+  "name": "multi-line-zoho-invoice",
   "version": "1.0.0",
   "description": "A Zapier integration to create Zoho invoices with multiple line items",
   "repository": "cleancoded/harvestzohoinvoice",
