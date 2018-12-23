@@ -6,9 +6,7 @@ const createInvoice = (z, bundle) => {
         method: 'POST',
         body: JSON.stringify({
             customer_id: bundle.inputData.contactId,
-            line_items: [
-                buildLineItems(bundle.inputData)
-            ]
+            line_items: buildLineItems(bundle.inputData)
         })
     });
 
@@ -16,10 +14,23 @@ const createInvoice = (z, bundle) => {
 };
 
 const buildLineItems = (inputData) => {
-    const quantityRegExp = new RegExp('^{{{([0-9]+)');
+    let result = [];
+    const lineItemSplits = inputData.lineItems.split('\n');
+
+    lineItemSplits.forEach((split) => {
+        result.push(buildLineItem(split, inputData.lineItemId));
+    });
+
+    return result;
+};
+
+const buildLineItem = (lineItemInput, lineItemId) => {
     let result = {};
-    result.item_id = inputData.lineItemId;
-    result.quantity = inputData.lineItems.match(quantityRegExp)[1];
+    const quantityRegExp = new RegExp('^{{{([0-9]+)');
+    const descriptionRegExp = new RegExp(' (.+)}}}$')
+    result.item_id = lineItemId;
+    result.quantity = lineItemInput.match(quantityRegExp)[1];
+    result.description = lineItemInput.match(descriptionRegExp)[1];
 
     return result;
 };

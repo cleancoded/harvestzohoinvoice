@@ -150,28 +150,15 @@ describe('Multi-line-item Zoho Invoice', () => {
                 .catch(done);
         });
 
-        xit('should make expected Zoho API call', (done) => {
-            const bundle = {};
-
-            nock(constants.ZOHO_API)
-                .post('/invoices')
-                .reply(200, true);
-
-            appTester(App.creates.invoice.operation.perform, bundle)
-                .then((result) => {
-                    result.should.true();
-
-                    done();
-                })
-                .catch(done);
-        });
-
-        xit('should create invoice with expected line items', (done) => {
+        it('should create invoice with expected line items', (done) => {
             const expectedLineItemId = 123;
             const expectedCustomerId = 123456789;
             const bundle = {
-                lineItems: "{{{10 WP fixes}}}\n" +
-                            "{{{4 Web Maintenance}}}"
+                inputData: {
+                    contactId: expectedCustomerId,
+                    lineItems: "{{{10 WP fixes}}}\n" +
+                                "{{{4 Web Maintenance}}}"
+                }
             };
             const firstExpectedLineItem = {
                 item_id: expectedLineItemId,
@@ -183,6 +170,40 @@ describe('Multi-line-item Zoho Invoice', () => {
                 quantity: 4,
                 description: "Web Maintenance"
             };
+
+            nock(constants.ZOHO_API)
+                .post('/invoices', (body) => {
+                    const lineItems = body.line_items;
+
+                    return lineItems.length == 2;
+                })
+                .reply(200, {
+                    invoice: {
+                        line_items: [
+                            {
+                                item_id: expectedLineItemId,
+                                quantity: 10,
+                                description: "WP fixes"
+                            },
+                            {
+                                item_id: expectedLineItemId,
+                                quantity: 4,
+                                description: "Web Maintenance"
+                            }
+                        ]
+                    }
+                });
+
+            appTester(App.creates.invoice.operation.perform, bundle)
+                .then((result) => {
+                    const lineItems = result.invoice.line_items;
+
+                    lineItems[0].should.deepEqual(firstExpectedLineItem);
+                    lineItems[1].should.deepEqual(secondExpectedLineItem);
+
+                    done();
+                })
+                .catch(done);
         });
     });
 });
