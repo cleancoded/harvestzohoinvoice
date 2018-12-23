@@ -66,7 +66,7 @@ const testAuth = (z, bundle) => {
 
 module.exports = {
     type: 'oauth2',
-    oauthConfig: {
+    oauth2Config: {
         authorizeUrl: {
             url: `${constants.AUTH_BASE}/auth`,
             params: {
