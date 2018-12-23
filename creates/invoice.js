@@ -1,12 +1,21 @@
-const createInvoice = (z, bundle) => {
-    const promise = {};
+const constants = require('../constants');
 
-    return {
-        customer_id: 1,
-        line_items: [
-            {}
-        ]
-    };
+const createInvoice = (z, bundle) => {
+    const promise = z.request({
+        url: `${constants.ZOHO_API}/invoices`,
+        method: 'POST',
+        body: JSON.stringify({
+            customer_id: bundle.inputData.contactId
+        })
+    });
+
+    return promise.then((response) => JSON.parse(response.content));
+};
+
+const buildLineItems = (inputData) => {
+    const lineItemsInput = inputData.lineItems;
+
+    return []
 };
 
 module.exports = {
