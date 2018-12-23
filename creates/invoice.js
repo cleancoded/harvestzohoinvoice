@@ -5,7 +5,10 @@ const createInvoice = (z, bundle) => {
         url: `${constants.ZOHO_API}/invoices`,
         method: 'POST',
         body: JSON.stringify({
-            customer_id: bundle.inputData.contactId
+            customer_id: bundle.inputData.contactId,
+            line_items: [
+                buildLineItems(bundle.inputData)
+            ]
         })
     });
 
@@ -13,9 +16,12 @@ const createInvoice = (z, bundle) => {
 };
 
 const buildLineItems = (inputData) => {
-    const lineItemsInput = inputData.lineItems;
+    const quantityRegExp = new RegExp('^{{{([0-9]+)');
+    let result = {};
+    result.item_id = inputData.lineItemId;
+    result.quantity = inputData.lineItems.match(quantityRegExp)[1];
 
-    return []
+    return result;
 };
 
 module.exports = {

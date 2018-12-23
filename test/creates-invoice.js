@@ -12,7 +12,8 @@ describe('Multi-line-item Zoho Invoice', () => {
             const expectedCustomerId = 1;
             const bundle = {
                 inputData: {
-                    contactId: expectedCustomerId
+                    contactId: expectedCustomerId,
+                    lineItems: '{{{10 WP fixes}}}'
                 }
             };
 
@@ -38,15 +39,34 @@ describe('Multi-line-item Zoho Invoice', () => {
                 .catch(done);
         });
 
-        xit('should create invoice with line items', (done) => {
+        it('should create invoice with line items', (done) => {
             const bundle = {
-                lineItems: "{{{10 WP fixes}}}"
+                inputData: {
+                    lineItems: '{{{10 WP fixes}}}'
+                }
             };
+
+            nock(constants.ZOHO_API)
+                .post('/invoices', (body) => {
+                    const lineItems = body.line_items;
+
+                    return lineItems.length > 0;
+                })
+                .reply(200, {
+                    invoice: {
+                        line_items: [
+                            {
+                                quantity: 10,
+                                description: 'WP fixes'
+                            }
+                        ]
+                    }
+                });
 
             appTester(App.creates.invoice.operation.perform, bundle)
                 .then((result) => {
-                    result.should.have.property('line_items');
-                    const lineItems = result.line_items;
+                    result.invoice.should.have.property('line_items');
+                    const lineItems = result.invoice.line_items;
 
                     lineItems.length.should.be.above(0);
 
@@ -55,32 +75,73 @@ describe('Multi-line-item Zoho Invoice', () => {
                 .catch(done);
         });
 
-        xit('should create invoice with line item with expected line item ID', (done) => {
+        it('should create invoice with line item with expected line item ID', (done) => {
             const expectedLineItemId = 123;
             const bundle = {
-                lineItems: "{{{10 WP fixes}}}"
+                inputData: {
+                    lineItemId: expectedLineItemId,
+                    lineItems: '{{{10 WP fixes}}}'
+                }
             };
+
+            nock(constants.ZOHO_API)
+                .post('/invoices', (body) => {
+                    const lineItems = body.line_items;
+
+                    return lineItems[0].item_id === expectedLineItemId;
+                })
+                .reply(200, {
+                    invoice: {
+                        line_items: [
+                            {
+                                line_item_id: expectedLineItemId,
+                                quantity: 10,
+                                description: 'WP fixes'
+                            }
+                        ]
+                    }
+                });
 
             appTester(App.creates.invoice.operation.perform, bundle)
                 .then((result) => {
-                    const lineItems = result.line_items;
+                    const lineItems = result.invoice.line_items;
 
-                    lineItems[0].item_id.should.eql(expectedLineItemId);
+                    lineItems[0].line_item_id.should.eql(expectedLineItemId);
 
                     done();
                 })
                 .catch(done);
         });
 
-        xit('should create invoice with line item with expected quantity', (done) => {
+        it('should create invoice with line item with expected quantity', (done) => {
             const expectedQuantity = 10;
+            const expectedDescription = 'WP fixes';
             const bundle = {
-                lineItems: "{{{10 WP fixes}}}"
+                inputData: {
+                    lineItems: `{{{${expectedQuantity} ${expectedDescription}}}}`
+                }
             };
+
+            nock(constants.ZOHO_API)
+                .post('/invoices', (body) => {
+                    const lineItems = body.line_items;
+
+                    return lineItems[0].quantity == expectedQuantity;
+                })
+                .reply(200, {
+                    invoice: {
+                        line_items: [
+                            {
+                                quantity: expectedQuantity,
+                                description: expectedDescription
+                            }
+                        ]
+                    }
+                });
 
             appTester(App.creates.invoice.operation.perform, bundle)
                 .then((result) => {
-                    const lineItems = result.line_items;
+                    const lineItems = result.invoice.line_items;
 
                     lineItems[0].quantity.should.eql(expectedQuantity);
 
