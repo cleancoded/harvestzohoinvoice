@@ -18,7 +18,7 @@ describe('Multi-line-item Zoho Invoice', () => {
             };
 
             nock(constants.ZOHO_API)
-                .post('/invoices', (body) => {
+                .post('/invoices?send=false', (body) => {
                     return body.customer_id === expectedCustomerId;
                 })
                 .reply(200, {
@@ -47,7 +47,7 @@ describe('Multi-line-item Zoho Invoice', () => {
             };
 
             nock(constants.ZOHO_API)
-                .post('/invoices', (body) => {
+                .post('/invoices?send=false', (body) => {
                     const lineItems = body.line_items;
 
                     return lineItems.length > 0;
@@ -85,7 +85,7 @@ describe('Multi-line-item Zoho Invoice', () => {
             };
 
             nock(constants.ZOHO_API)
-                .post('/invoices', (body) => {
+                .post('/invoices?send=false', (body) => {
                     const lineItems = body.line_items;
 
                     return lineItems[0].item_id === expectedLineItemId;
@@ -123,7 +123,7 @@ describe('Multi-line-item Zoho Invoice', () => {
             };
 
             nock(constants.ZOHO_API)
-                .post('/invoices', (body) => {
+                .post('/invoices?send=false', (body) => {
                     const lineItems = body.line_items;
 
                     return lineItems[0].quantity == expectedQuantity;
@@ -172,7 +172,7 @@ describe('Multi-line-item Zoho Invoice', () => {
             };
 
             nock(constants.ZOHO_API)
-                .post('/invoices', (body) => {
+                .post('/invoices?send=false', (body) => {
                     const lineItems = body.line_items;
 
                     return lineItems.length == 2;
