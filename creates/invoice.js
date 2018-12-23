@@ -2,7 +2,7 @@ const constants = require('../constants');
 
 const createInvoice = (z, bundle) => {
     const promise = z.request({
-        url: `${constants.ZOHO_API}/invoices?send=false`,
+        url: `${constants.API_BASE}/invoices?send=false`,
         method: 'POST',
         body: JSON.stringify({
             customer_id: bundle.inputData.contactId,

@@ -1,5 +1,6 @@
 'use strict';
 
 module.exports = {
-    ZOHO_API: "https://invoice.zoho.com/api/v3" 
+    API_BASE: 'https://invoice.zoho.com/api/v3', 
+    AUTH_BASE: 'https://accounts.zoho.com/oauth/v2'
  };

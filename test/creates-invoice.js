@@ -17,7 +17,7 @@ describe('Multi-line-item Zoho Invoice', () => {
                 }
             };
 
-            nock(constants.ZOHO_API)
+            nock(constants.API_BASE)
                 .post('/invoices?send=false', (body) => {
                     return body.customer_id === expectedCustomerId;
                 })
@@ -46,7 +46,7 @@ describe('Multi-line-item Zoho Invoice', () => {
                 }
             };
 
-            nock(constants.ZOHO_API)
+            nock(constants.API_BASE)
                 .post('/invoices?send=false', (body) => {
                     const lineItems = body.line_items;
 
@@ -84,7 +84,7 @@ describe('Multi-line-item Zoho Invoice', () => {
                 }
             };
 
-            nock(constants.ZOHO_API)
+            nock(constants.API_BASE)
                 .post('/invoices?send=false', (body) => {
                     const lineItems = body.line_items;
 
@@ -122,7 +122,7 @@ describe('Multi-line-item Zoho Invoice', () => {
                 }
             };
 
-            nock(constants.ZOHO_API)
+            nock(constants.API_BASE)
                 .post('/invoices?send=false', (body) => {
                     const lineItems = body.line_items;
 
@@ -171,7 +171,7 @@ describe('Multi-line-item Zoho Invoice', () => {
                 description: "Web Maintenance"
             };
 
-            nock(constants.ZOHO_API)
+            nock(constants.API_BASE)
                 .post('/invoices?send=false', (body) => {
                     const lineItems = body.line_items;
 

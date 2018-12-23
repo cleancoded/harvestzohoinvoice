@@ -1,4 +1,5 @@
 const invoiceCreate = require('./creates/invoice');
+const authentication = require('./authentication');
 
 const handleHttpError = (response, z) => {
   if (response.status >= 400) {
@@ -10,8 +11,12 @@ const handleHttpError = (response, z) => {
   return response;
 };
 
-const addOrganizationHeader = (request, z, bundle) => {
+const addZohoHeaders = (request, z, bundle) => {
   request.headers['X-com-zoho-invoice-organizationid'] = bundle.inputData.organizationId;
+
+  if (bundle.authData.acess_token) {
+    request.headers.Authorization = `Zoho-oauthtoken ${input.authData.access_token}`;
+  }
 
   return request;
 };
@@ -20,8 +25,10 @@ const App = {
   version: require('./package.json').version,
   platformVersion: require('zapier-platform-core').version,
 
+  authentication: authentication,
+
   beforeRequest: [
-    addOrganizationHeader
+    addZohoHeaders
   ],
 
   afterResponse: [
