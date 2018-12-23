@@ -10,11 +10,18 @@ const handleHttpError = (response, z) => {
   return response;
 };
 
+const addOrganizationHeader = (request, z, bundle) => {
+  request.headers['X-com-zoho-invoice-organizationid'] = bundle.inputData.organizationId;
+
+  return request;
+};
+
 const App = {
   version: require('./package.json').version,
   platformVersion: require('zapier-platform-core').version,
 
   beforeRequest: [
+    addOrganizationHeader
   ],
 
   afterResponse: [
