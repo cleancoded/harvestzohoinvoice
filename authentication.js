@@ -7,7 +7,7 @@ const getAccessToken = (z, bundle) => {
             code: bundle.inputData.code,
             client_id: process.env.CLIENT_ID,
             client_secret: process.env.CLIENT_SECRET,
-            redirect_url: process.env.REDIRECT_URL,
+            redirect_uri: process.env.REDIRECT_URL,
             grant_type: 'authorization_code'
         }
     });
@@ -33,7 +33,7 @@ const refreshAccessToken = (z, bundle) => {
             refresh_token: bundle.authData.refresh_token,
             client_id:  process.env.CLIENT_ID,
             client_secret: process.env.CLIENT_SECRET,
-            redirect_url: process.env.REDIRECT_URL,
+            redirect_uri: process.env.REDIRECT_URL,
             grant_type: 'refresh_token'
         }
     });
