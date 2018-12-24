@@ -7,12 +7,13 @@ const getAccessToken = (z, bundle) => {
             code: bundle.inputData.code,
             client_id: process.env.CLIENT_ID,
             client_secret: process.env.CLIENT_SECRET,
-            redirect_url: bundle.inputData.redirect_url,
+            redirect_url: process.env.REDIRECT_URL,
             grant_type: 'authorization_code'
         }
     });
 
     return promise.then((response) => {
+        z.console.log('getAccessToken response: ', response);
         if (response.status !== 200) {
             throw new Error('Unable to fetch access token: ' + response.content);
         }
@@ -32,7 +33,7 @@ const refreshAccessToken = (z, bundle) => {
             refresh_token: bundle.authData.refresh_token,
             client_id:  process.env.CLIENT_ID,
             client_secret: process.env.CLIENT_SECRET,
-            redirect_url: bundle.inputData.redirect_url,
+            redirect_url: process.env.REDIRECT_URL,
             grant_type: 'refresh_token'
         }
     });
