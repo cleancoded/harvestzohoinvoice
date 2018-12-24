@@ -20,8 +20,8 @@ const getAccessToken = (z, bundle) => {
 
         const result = JSON.parse(response.content);
         return {
-            access_token: result.access_token
-            // refresh_token: result.refresh_token
+            access_token: result.access_token,
+            refresh_token: result.refresh_token
         };
     });
 };
@@ -34,7 +34,8 @@ const refreshAccessToken = (z, bundle) => {
             client_id:  process.env.CLIENT_ID,
             client_secret: process.env.CLIENT_SECRET,
             redirect_uri: process.env.REDIRECT_URL,
-            grant_type: 'refresh_token'
+            grant_type: 'refresh_token',
+            prompt: 'consent'
         }
     });
 
@@ -57,6 +58,7 @@ const testAuth = (z, bundle) => {
     });
 
     return promise.then((response) => {
+        z.console.log("testAuth response: ", response);
         if (response.status === 401) {
             throw new Error('The access token you supplied is not valid');
         }
@@ -78,7 +80,7 @@ module.exports = {
             }
         },
         getAccessToken: getAccessToken,
-        // refreshAccessToken: refreshAccessToken,
+        refreshAccessToken: refreshAccessToken,
         autoRefresh: true,
         scope: 'ZohoInvoice.invoices.CREATE'
     },
