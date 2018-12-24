@@ -13,7 +13,7 @@ describe('Multi-line-item Zoho Invoice', () => {
             const bundle = {
                 inputData: {
                     contactId: expectedCustomerId,
-                    lineItems: '{{{10 WP fixes}}}'
+                    lineItems: '<<<10 WP fixes>>>'
                 }
             };
 
@@ -42,7 +42,7 @@ describe('Multi-line-item Zoho Invoice', () => {
         it('should create invoice with line items', (done) => {
             const bundle = {
                 inputData: {
-                    lineItems: '{{{10 WP fixes}}}'
+                    lineItems: '<<<10 WP fixes>>>'
                 }
             };
 
@@ -80,7 +80,7 @@ describe('Multi-line-item Zoho Invoice', () => {
             const bundle = {
                 inputData: {
                     lineItemId: expectedLineItemId,
-                    lineItems: '{{{10 WP fixes}}}'
+                    lineItems: '<<<10 WP fixes>>>'
                 }
             };
 
@@ -118,7 +118,7 @@ describe('Multi-line-item Zoho Invoice', () => {
             const expectedDescription = 'WP fixes';
             const bundle = {
                 inputData: {
-                    lineItems: `{{{${expectedQuantity} ${expectedDescription}}}}`
+                    lineItems: `<<<${expectedQuantity} ${expectedDescription}>>>`
                 }
             };
 
@@ -156,8 +156,8 @@ describe('Multi-line-item Zoho Invoice', () => {
             const bundle = {
                 inputData: {
                     contactId: expectedCustomerId,
-                    lineItems: "{{{10 WP fixes}}}\n" +
-                                "{{{4 Web Maintenance}}}"
+                    lineItems: "<<<10 WP fixes>>>\n" +
+                                "<<<4 Web Maintenance>>>"
                 }
             };
             const firstExpectedLineItem = {

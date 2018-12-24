@@ -39,6 +39,7 @@ const refreshAccessToken = (z, bundle) => {
     });
 
     return promise.then((response) => {
+        z.console.log("refreshAccessToken response: ", response);
         if (response.status !== 200) {
             throw new Error('Unable to fetch access token: ' + response.content);
         }

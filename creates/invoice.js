@@ -26,8 +26,8 @@ const buildLineItems = (inputData) => {
 
 const buildLineItem = (lineItemInput, lineItemId) => {
     let result = {};
-    const quantityRegExp = new RegExp('^{{{([0-9]+)');
-    const descriptionRegExp = new RegExp(' (.+)}}}$')
+    const quantityRegExp = new RegExp('^<<<([0-9]+)');
+    const descriptionRegExp = new RegExp(' (.+)>>>$')
     result.item_id = lineItemId;
     result.quantity = lineItemInput.match(quantityRegExp)[1];
     result.description = lineItemInput.match(descriptionRegExp)[1];
