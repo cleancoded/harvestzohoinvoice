@@ -8,9 +8,7 @@ const getAccessToken = (z, bundle) => {
             client_id: process.env.CLIENT_ID,
             client_secret: process.env.CLIENT_SECRET,
             redirect_uri: process.env.REDIRECT_URL,
-            grant_type: 'authorization_code',
-            access_type: 'offline',
-            prompt: 'consent'
+            grant_type: 'authorization_code'
         }
     });
 
@@ -77,7 +75,9 @@ module.exports = {
                 client_id: '{{process.env.CLIENT_ID}}',
                 state: '{{bundle.inputData.state}}',
                 redirect_url: '{{bundle.inputData.redirect_url}}',
-                response_type: 'code'
+                response_type: 'code',
+                access_type: 'offline',
+                prompt: 'consent'
             }
         },
         getAccessToken: getAccessToken,
