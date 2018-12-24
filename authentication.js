@@ -9,6 +9,7 @@ const getAccessToken = (z, bundle) => {
             client_secret: process.env.CLIENT_SECRET,
             redirect_uri: process.env.REDIRECT_URL,
             grant_type: 'authorization_code',
+            access_type: 'offline',
             prompt: 'consent'
         }
     });
