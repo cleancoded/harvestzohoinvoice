@@ -18,8 +18,10 @@ describe('Multi-line-item Zoho Invoice', () => {
             };
 
             nock(constants.API_BASE)
-                .post('/invoices?send=false', (body) => {
-                    return body.customer_id === expectedCustomerId;
+                .post('/invoices')
+                .query((query) => {
+                    const params = JSON.parse(query.JSONString);
+                    return params.customer_id == expectedCustomerId;
                 })
                 .reply(200, {
                     invoice: {
@@ -47,10 +49,10 @@ describe('Multi-line-item Zoho Invoice', () => {
             };
 
             nock(constants.API_BASE)
-                .post('/invoices?send=false', (body) => {
-                    const lineItems = body.line_items;
-
-                    return lineItems.length > 0;
+                .post('/invoices')
+                .query((query) => {
+                    const params = JSON.parse(query.JSONString);
+                    return params.line_items.length > 0;
                 })
                 .reply(200, {
                     invoice: {
@@ -85,8 +87,10 @@ describe('Multi-line-item Zoho Invoice', () => {
             };
 
             nock(constants.API_BASE)
-                .post('/invoices?send=false', (body) => {
-                    const lineItems = body.line_items;
+                .post('/invoices')
+                .query((query) => {
+                    const params = JSON.parse(query.JSONString);
+                    const lineItems = params.line_items;
 
                     return lineItems[0].item_id === expectedLineItemId;
                 })
@@ -123,8 +127,10 @@ describe('Multi-line-item Zoho Invoice', () => {
             };
 
             nock(constants.API_BASE)
-                .post('/invoices?send=false', (body) => {
-                    const lineItems = body.line_items;
+                .post('/invoices')
+                .query((query) => {
+                    const params = JSON.parse(query.JSONString);
+                    const lineItems = params.line_items;
 
                     return lineItems[0].quantity == expectedQuantity;
                 })
@@ -172,8 +178,10 @@ describe('Multi-line-item Zoho Invoice', () => {
             };
 
             nock(constants.API_BASE)
-                .post('/invoices?send=false', (body) => {
-                    const lineItems = body.line_items;
+                .post('/invoices')
+                .query((query) => {
+                    const params = JSON.parse(query.JSONString);
+                    const lineItems = params.line_items;
 
                     return lineItems.length == 2;
                 })

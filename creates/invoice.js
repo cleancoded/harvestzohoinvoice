@@ -4,10 +4,12 @@ const createInvoice = (z, bundle) => {
     const promise = z.request({
         url: `${constants.API_BASE}/invoices?send=false`,
         method: 'POST',
-        body: JSON.stringify({
-            customer_id: bundle.inputData.contactId,
-            line_items: buildLineItems(bundle.inputData)
-        })
+        params: {
+            JSONString: JSON.stringify({
+                customer_id: bundle.inputData.contactId,
+                line_items: buildLineItems(bundle.inputData)
+            })
+        }
     });
 
     return promise.then((response) => JSON.parse(response.content));

@@ -15,11 +15,9 @@ const addZohoHeaders = (request, z, bundle) => {
   request.headers['X-com-zoho-invoice-organizationid'] = bundle.inputData.organizationId;
 
   if (bundle.authData.access_token) {
-    z.console.log("adding auth token headers");
     request.headers.Authorization = `Zoho-oauthtoken ${bundle.authData.access_token}`;
   }
 
-  z.console.log("Added headers: ", request.headers);
   return request;
 };
 

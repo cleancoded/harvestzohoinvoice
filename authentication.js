@@ -84,7 +84,7 @@ module.exports = {
         getAccessToken: getAccessToken,
         refreshAccessToken: refreshAccessToken,
         autoRefresh: true,
-        scope: 'ZohoInvoice.invoices.CREATE'
+        scope: 'ZohoInvoice.invoices.CREATE,ZohoInvoice.settings.READ'
     },
     test: testAuth,
     connectionLabel: '{{username}}'
