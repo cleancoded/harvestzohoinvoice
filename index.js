@@ -1,6 +1,7 @@
 const invoiceCreate = require('./creates/invoice');
 const organization = require('./resources/organization');
 const item = require('./resources/item');
+const contact = require('./resources/contact');
 const authentication = require('./authentication');
 
 const handleHttpError = (response, z) => {
@@ -44,6 +45,7 @@ const App = {
 
   triggers: {
     [organization.key]: organization,
+    [contact.key]: contact,
     [item.key]: item
   },
 

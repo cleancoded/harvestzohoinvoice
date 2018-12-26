@@ -68,6 +68,7 @@ module.exports = {
                 key: 'contactId',
                 label: 'Contact ID',
                 required: true,
+                dynamic: 'contact.item.name',
                 helpText: 'The ID of the Zoho Contact being invoiced'
             },
             {

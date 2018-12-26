@@ -13,7 +13,6 @@ const getAccessToken = (z, bundle) => {
     });
 
     return promise.then((response) => {
-        z.console.log('getAccessToken response: ', response);
         if (response.status !== 200) {
             throw new Error('Unable to fetch access token: ' + response.content);
         }
@@ -39,7 +38,6 @@ const refreshAccessToken = (z, bundle) => {
     });
 
     return promise.then((response) => {
-        z.console.log("refreshAccessToken response: ", response);
         if (response.status !== 200) {
             throw new Error('Unable to fetch access token: ' + response.content);
         }
@@ -84,7 +82,9 @@ module.exports = {
         getAccessToken: getAccessToken,
         refreshAccessToken: refreshAccessToken,
         autoRefresh: true,
-        scope: 'ZohoInvoice.invoices.CREATE,ZohoInvoice.settings.READ'
+        scope: 'ZohoInvoice.invoices.CREATE,' +
+                'ZohoInvoice.settings.READ,' +
+                'ZohoInvoice.contacts.READ'
     },
     test: testAuth,
     connectionLabel: '{{name}}'
