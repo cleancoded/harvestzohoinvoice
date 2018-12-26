@@ -63,7 +63,7 @@ const testAuth = (z, bundle) => {
             throw new Error('The access token you supplied is not valid');
         }
 
-        return z.JSON.parse(response.content).user.name;
+        return z.JSON.parse(response.content).user;
     });
 };
 
@@ -87,5 +87,5 @@ module.exports = {
         scope: 'ZohoInvoice.invoices.CREATE,ZohoInvoice.settings.READ'
     },
     test: testAuth,
-    connectionLabel: '{{username}}'
+    connectionLabel: '{{name}}'
 };
