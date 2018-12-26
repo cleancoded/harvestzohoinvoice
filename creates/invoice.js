@@ -74,6 +74,7 @@ module.exports = {
                 key: 'lineItemId',
                 label: 'Line Item ID',
                 required: true,
+                dynamic: 'item.id.name',
                 helpText: 'The ID of Zoho Line Item to use'
             },
             {

@@ -15,7 +15,7 @@ const queryOrganizations = (z, bundle) => {
                 id: org.organization_id,
                 name: org.name
             });
-        })
+        });
 
         return orgs;
     });
