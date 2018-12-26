@@ -61,7 +61,8 @@ module.exports = {
             {
                 key: 'organizationId',
                 label: 'Organization',
-                required: true
+                required: true,
+                dynamic: 'organization.id.name'
             },
             {
                 key: 'contactId',

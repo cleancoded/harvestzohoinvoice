@@ -1,4 +1,5 @@
 const invoiceCreate = require('./creates/invoice');
+const organization = require('./resources/organization');
 const authentication = require('./authentication');
 
 const handleHttpError = (response, z) => {
@@ -41,6 +42,7 @@ const App = {
   },
 
   triggers: {
+    [organization.key]: organization
   },
 
   searches: {
