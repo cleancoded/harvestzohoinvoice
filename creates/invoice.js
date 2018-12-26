@@ -87,6 +87,8 @@ module.exports = {
             {
                 key: 'shouldSend',
                 label: 'Send',
+                type: 'boolean',
+                default: 'no',
                 required: false,
                 helpText: 'Should we send the invoice to the contact now?'
             }
