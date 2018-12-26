@@ -6,6 +6,8 @@ const handleHttpError = (response, z) => {
     z.console.log(`Status: ${response.status}`);
     z.console.log(`Content: ${response.content}`);
     z.console.log(`Request: ${JSON.stringify(response.request)}`);
+
+    throw new Error(`Got an unexpected response from Zoho: ${response.content}`);
   }
 
   return response;

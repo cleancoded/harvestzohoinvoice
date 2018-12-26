@@ -30,11 +30,22 @@ const buildLineItem = (lineItemInput, lineItemId) => {
     let result = {};
     const quantityRegExp = new RegExp('^<<<([0-9]+)');
     const descriptionRegExp = new RegExp(' (.+)>>>$')
-    result.item_id = lineItemId;
-    result.quantity = lineItemInput.match(quantityRegExp)[1];
-    result.description = lineItemInput.match(descriptionRegExp)[1];
+    const quantityMatch = lineItemInput.match(quantityRegExp);
+    const descriptionMatch = lineItemInput.match(descriptionRegExp);
 
-    return result;
+    if (quantityMatch === null || descriptionMatch === null) {
+        console.log("throwing error");
+        const errorMessage = 'We received some unexpected input from the previous Zapier step.\n' +
+                                'Ensure the line item text is in the format <<<[hours][space][description]>>>';
+        throw new Error(errorMessage);
+    }
+    else {
+        result.item_id = lineItemId;
+        result.quantity = quantityMatch[1];
+        result.description = descriptionMatch[1];
+
+        return result;
+    }
 };
 
 module.exports = {

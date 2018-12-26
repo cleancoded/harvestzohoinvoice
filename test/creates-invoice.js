@@ -213,5 +213,27 @@ describe('Multi-line-item Zoho Invoice', () => {
                 })
                 .catch(done);
         });
+
+        xit('should throw an exception on malformed digest input', (done) => {
+            const bundle = {
+                inputData: {
+                    lineItems: 'This is an unexpected, unparseable string\n' +
+                                'with a line-break'
+                }
+            };
+
+            appTester(App.creates.invoice.operation.perform, bundle)
+                .then((result) => {
+                    done(new Error("This test should have caught an exception, but none was ever thrown!"));
+                })
+                .catch((error) => {
+                    const expectedErrorMessage = 'We received some unexpected input';
+                    const messageExists = error.contains(expectedErrorMessage);
+
+                    messageExists.should.be.true();
+
+                    done();
+                });
+        });
     });
 });
