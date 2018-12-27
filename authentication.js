@@ -56,7 +56,6 @@ const testAuth = (z, bundle) => {
     });
 
     return promise.then((response) => {
-        z.console.log("testAuth response: ", response);
         if (response.status === 401) {
             throw new Error('The access token you supplied is not valid');
         }
