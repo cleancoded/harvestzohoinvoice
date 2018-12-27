@@ -2,7 +2,7 @@ const constants = require('../constants');
 
 const createInvoice = (z, bundle) => {
     const promise = z.request({
-        url: `${constants.API_BASE}/invoices?send=false`,
+        url: `${constants.API_BASE}/invoices?send=${bundle.inputData.shouldSend}`,
         method: 'POST',
         params: {
             JSONString: JSON.stringify({
@@ -88,7 +88,7 @@ module.exports = {
                 key: 'shouldSend',
                 label: 'Send',
                 type: 'boolean',
-                default: 'no',
+                default: 'false',
                 required: false,
                 helpText: 'Should we send the invoice to the contact now?'
             }
