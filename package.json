@@ -1,6 +1,6 @@
 {
   "name": "multi-line-zoho-invoice",
-  "version": "1.6.0",
+  "version": "1.8.0",
   "description": "A Zapier integration to create Zoho invoices with multiple line items",
   "repository": "cleancoded/harvestzohoinvoice",
   "author": "Skye Griffin <skybox@trioptimum.com>",
@@ -14,7 +14,7 @@
     "npm": ">=5.6.0"
   },
   "dependencies": {
-    "zapier-platform-core": "7.5.0"
+    "zapier-platform-core": "7.6.0"
   },
   "devDependencies": {
     "mocha": "^5.2.0",

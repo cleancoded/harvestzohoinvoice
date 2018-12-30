@@ -214,6 +214,66 @@ describe('Multi-line-item Zoho Invoice', () => {
                 .catch(done);
         });
 
+        it('should create invoice with expected line items and not fail', (done) => {
+            const expectedLineItemId = 123;
+            const expectedCustomerId = 123456789;
+            const bundle = {
+                inputData: {
+                    contactId: expectedCustomerId,
+                    lineItems: "<<<2.1 Quickbooks: Created Ajax call/view and finished controller to send Quickbooks invoice from website>>>\n" +
+                                "<<<3.0 StarrMatica [10-11-2018]: IBM Watson text-to-speech functionality with video demo>>>"
+                }
+            };
+            const firstExpectedDescription = "Quickbooks: Created Ajax call/view and finished controller to send Quickbooks invoice from website";
+            const firstExpectedLineItem = {
+                item_id: expectedLineItemId,
+                quantity: 2.1,
+                description: firstExpectedDescription
+            };
+            const secondExpectedDescription = "StarrMatica [10-11-2018]: IBM Watson text-to-speech functionality with video demo";
+            const secondExpectedLineItem = {
+                item_id: expectedLineItemId,
+                quantity: 3.0,
+                description: secondExpectedDescription
+            };
+
+            nock(constants.API_BASE)
+                .post('/invoices')
+                .query((query) => {
+                    const params = JSON.parse(query.JSONString);
+                    const lineItems = params.line_items;
+
+                    return lineItems.length == 2;
+                })
+                .reply(200, {
+                    invoice: {
+                        line_items: [
+                            {
+                                item_id: expectedLineItemId,
+                                quantity: 2.1,
+                                description: firstExpectedDescription
+                            },
+                            {
+                                item_id: expectedLineItemId,
+                                quantity: 3.0,
+                                description: secondExpectedDescription
+                            }
+                        ]
+                    }
+                });
+
+            appTester(App.creates.invoice.operation.perform, bundle)
+                .then((result) => {
+                    const lineItems = result.invoice.line_items;
+
+                    lineItems[0].should.deepEqual(firstExpectedLineItem);
+                    lineItems[1].should.deepEqual(secondExpectedLineItem);
+
+                    done();
+                })
+                .catch(done);
+        });
+
         xit('should throw an exception on malformed digest input', (done) => {
             const bundle = {
                 inputData: {

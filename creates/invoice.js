@@ -28,14 +28,22 @@ const buildLineItems = (inputData) => {
 
 const buildLineItem = (lineItemInput, lineItemId) => {
     let result = {};
-    const quantityRegExp = new RegExp('^<<<([0-9]+)');
-    const descriptionRegExp = new RegExp('^<<<[0-9]+ (.+)>>>$')
+    const quantityRegExp = new RegExp('^<<<([0-9]+\.?[0-9]*)');
+    const descriptionRegExp = new RegExp('^<<<[0-9]+\.?[0-9]* (.+)>>>$')
     const quantityMatch = lineItemInput.match(quantityRegExp);
     const descriptionMatch = lineItemInput.match(descriptionRegExp);
 
     if (quantityMatch === null || descriptionMatch === null) {
-        const errorMessage = 'We received some unexpected input from the previous Zapier step.\n' +
-                                'Ensure the line item text is in the format <<<[hours][space][description]>>>';
+        let errorMessage = 'We received some unexpected input from the previous Zapier step.\n' +
+                                'Ensure the line item text is in the format <<<[hours][space][description]>>>\n';
+
+        if (quantityMatch === null) {
+            errorMessage += 'Number of hours could not be determined';
+        }
+        else if (descriptionMatch === null) {
+            errorMessage += 'Line item description could not be determined';
+        }
+
         throw new Error(errorMessage);
     }
     else {
