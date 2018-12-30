@@ -38,11 +38,13 @@ const buildLineItem = (lineItemInput, lineItemId) => {
                                 'Ensure the line item text is in the format <<<[hours][space][description]>>>\n';
 
         if (quantityMatch === null) {
-            errorMessage += 'Number of hours could not be determined';
+            errorMessage += 'Number of hours could not be determined\n ';
         }
         else if (descriptionMatch === null) {
-            errorMessage += 'Line item description could not be determined';
+            errorMessage += 'Line item description could not be determined\n';
         }
+
+        errorMessage += `The offending line was: "${lineItemInput}"`;
 
         throw new Error(errorMessage);
     }
